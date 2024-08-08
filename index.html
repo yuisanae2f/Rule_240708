@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+function main(RuleArg0 = "먼지") {
+    document.body.innerHTML = "";
+    class iIndexable {
+        static Number = 0;
+        constructor() {
+            this.Number = iIndexable.Number++; 
+        }
+    }
+    class cMemberType extends iIndexable {
+        static Number = 0;
+
+        /**
+         * 
+         * @param {String} name 
+         * @param {String} desc 
+         */
+        constructor(name, desc) {
+            super();
+            this.id = `cMemberType_${this.Number}`;
+            this.name = name;
+            this.desc = desc;
+            this.users = [];
+        }
+
+        /**
+         * 
+         * @returns {String}
+         */
+        Dump() { return `<div id="${this.id}"><fieldset><legend>${this.name}</legend><pre>${this.desc}</pre></fieldset></div><br/>`; }
+
+        /**
+         * 
+         * @returns {String}
+         */
+        Link() { return `<a href="#${this.id}" title="${this.desc}">${this.name}</a>`; }
+    };
+
+    const gMemberType = {
+        먼지: new cMemberType("먼지", "먼지다"),
+        "당신은 이제부터 제 먼지입니다": new cMemberType("당신은 이제부터 제 먼지입니다", "일반 유저다"),
+    };
+    class cRule extends iIndexable {
+        /**
+         * 
+         * @param {String} ExceptionText 
+         * @param {Object} Specifics 
+         */
+        constructor(ExceptionText, Specifics = {}) {
+            super();
+            this.id = `cRule_${this.Number}`;
+            this.None = ExceptionText;
+            this.OnSpecific = Specifics;
+        }
+        
+        /**
+         * 
+         * @param {String} key 
+         * @returns {String}
+         */
+        Dump(key) { return `<div id=${this.id}><fieldset><legend>${this.id}</legend><pre>${this.OnSpecific[key] ?? this.None}</pre></fieldset></div>`; }
+
+        /**
+         * @param {String} alterText
+         * @returns {String}
+         */
+        Link(alterText = "") { return `<a href="#${this.id}">${alterText == "" ? this.id : alterText}</a>`; }
+    }
+
+    const gRule = [
+        new cRule("예외용이다.", { "먼지" : `${gMemberType.먼지.Link()}에 대한 룰이다.` }),
+    ];
+
+    document.body.innerHTML += `
+    <h1>Role</h1>
+    <div>서버의 구성원들의 역할을 규정한다.</div><hr/>
+    `
+
+    for(const key in gMemberType) {
+        document.body.innerHTML += gMemberType[key].Dump();
+    }
+
+    document.body.innerHTML += `
+    <br/><h1>Rule</h1>
+    <div>서버의 구성원들에게 적용될 역할의 통칭이다.</div>
+    <div>Role에 따라 정의될 규칙을 확인할 수 있다.</div>
+    `
+
+    let str = `<select id="sel_Rule" onchange="__Onchange()">`;
+    for(const key in gMemberType) {
+        str += `<option value="${key}" ${key == RuleArg0 ? "selected" : ""}>${key}</option>`;
+    }
+
+    document.body.innerHTML += str + `</select><hr/>`;
+
+    for(const tempRule of gRule) {
+        document.body.innerHTML += tempRule.Dump(RuleArg0);
+    }
+}
+
+main();
+
+function __Onchange() {
+    main(document.getElementById("sel_Rule").value);
+}
+</script>
+</html>

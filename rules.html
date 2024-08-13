@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rules - 240708</title>
+</head>
+<body>
+    
+</body>
+<script>
+class iIndexable {
+    static Number = 0;
+    constructor() {
+        this.Number = iIndexable.Number++; 
+    }
+}
+class cMemberType extends iIndexable {
+    static Number = 0;
+
+    /**
+     * 
+     * @param {String} name 
+     * @param {String} desc 
+     */
+    constructor(name, desc) {
+        super();
+        this.id = `cMemberType_${this.Number}`;
+        this.name = name;
+        this.desc = desc;
+        this.users = [];
+    }
+
+    /**
+     * 
+     * @returns {String}
+     */
+    Dump() { return `<div id="${this.id}"><fieldset><legend>${this.name}</legend><pre>${this.desc}</pre></fieldset></div><br/>`; }
+
+    /**
+     * 
+     * @returns {String}
+     */
+    Link() { return `<a href="#${this.id}" title="${this.desc}">${this.name}</a>`; }
+};
+class cRule extends iIndexable {
+    /**
+     * 
+     * @param {String} ExceptionText 
+     * @param {Object} Specifics 
+     */
+    constructor(ExceptionText, Specifics = {}) {
+        super();
+        this.id = `cRule_${this.Number}`;
+        this.None = ExceptionText;
+        this.OnSpecific = Specifics;
+    }
+    
+    /**
+     * 
+     * @param {String} key 
+     * @returns {String}
+     */
+    Dump(key) { return (((this.OnSpecific[key] ?? this.None) == "") ? ("") : (`<div id=${this.id}><fieldset><legend>${this.id}</legend><pre>${this.OnSpecific[key] ?? this.None}</pre></fieldset></div>`)); }
+
+    /**
+     * @param {String} alterText
+     * @returns {String}
+     */
+    Link(Key = "", alterText = "") { return `<a href="#${this.id}" title="${this.OnSpecific[Key] ?? this.None}">${alterText == "" ? this.id : alterText}</a>`; }
+}
+
+function main(gMemberType, gRule, RuleArg0 = "먼지") {
+    document.body.innerHTML = `
+    <h1>Rule: 240708</h1>
+
+    <div>해당 페이지는 디스코드 서버 240708의 규칙을 관리하기 위함입니다. </div>
+    <div>Current Page does display the rules of the Discord Server 240708.</div> <br/>
+
+    <div>인원이 늘어나 더이상 규칙이 없이 서버 관리가 불가하다 판단, 이에 규칙을 생성합니다.</div>
+    <div>Situation of increasing population made the server managing impossible without rules. Now we are writing condition and terms.</div>
+
+    <div>서버 내부에서 크고 작은 분란이 있었기에 이를 해결하기 위한 수단이 필요하다 판단함.</div>
+    <div>The very first version of the Rule is now here for handling the "discords".</div>
+
+    <h1>Dear User, From the Owner of the Server</h1>
+    <div>안녕하십니까, 서버장 먼지입니다. </div>
+    <div>Greetings, this is server owner, Mungee. </div>
+    <div>우선 갑작스럽게 정해진 규칙에 당황하셨을 서버 내 유저분들께 죄송하다는 말씀 드립니다. </div>
+    <div>First, I would give you apologies of sudden rule establishing.</div>
+    <div>위에서 말씀드린 것처럼 서버 관리에 어려움이 생겨 규칙을 만들게 되었습니다. </div>
+    <div>It is made to manage the hardship of the server managing. </div>
+    <div>처음 여러분들께는 규칙이 없이 편하게 계실 수 있는 서버라 하였음에도 불구하고 규칙을 생성하게 되었습니다. </div>
+    <div>Right now we are writing the rules, while informing you we will not.</div>
+    <div>여러분들께서 더욱 편하게 계실 수 있도록 하기 위함이었다는 것을 알아주신다면 감사하겠습니다. </div>
+    <div>Despite that the purpose of writing is to improve the experience,</div>
+    <div>또한 제가 한 말에 책임을 지지 못한 것에 대단히 죄송합니다. </div>
+    <div>We are very sorry not being responsible of our own said. </div>
+    <div>규칙은 체계를 잡을 수 있는 정도로 잡았으며, 유저분들께서 서버 이용에 불편을 겪지 않을 정도로 정하였습니다.</div>
+    <div>Rules will be established in a minimun level to stabilise the system, and not to be felt uncomfortable for users.</div>
+    <div>이에 대한 불편을 겪으신 일이나 건의가 있으시다면 언제든지 말씀해 주시면 감사하겠습니다. </div>
+    <div>Any suggestions for inconveniences or changes will be welcomed.</div>
+    <div>긴 글 읽어주셔서 감사합니다.  </div>
+    <div>Lastly, Thank you for reading it all.</div>
+
+    <h1>Condition of the addition/edition of the rule</h1>
+    <div>규칙에 수정 및 추가가 있을 경우를 정의합니다.</div>
+    <ol>
+        <li>
+            <div>서버 내에서 문제가 발생하거나 서버 내 규칙으로 해결이 불가 혹은 규칙에서 모순이 발생할 경우, 해당 문제를 해결한 후 이와 같은 문제가 벌어지지 않도록 규칙을 수정 혹은 추가한다.</div>
+            <div>Provided a problem occurs within the server, and cannot be resolved by the existing rules, or a contradiction occurs by resolving, after resolving would affect the rules.</div>
+        </li>
+        
+        <li>
+            <div>건의로 규칙의 수정 혹은 추가에 대한 합당한 건의가 들어왔을 경우 규칙을 수정 혹은 추가한다.</div>
+            <div>A fine suggestions about the addition/edition of the rules would affect the rules.</div>
+        </li>
+    </ol>
+    `;
+
+
+    document.body.innerHTML += `
+    <h1>Role</h1>
+    <div>서버의 구성원들의 역할을 규정합니다.</div>
+    <div>Index of the role of the current server.</div>
+    
+    <hr/>
+    `
+
+    for(const key in gMemberType) {
+        document.body.innerHTML += gMemberType[key].Dump();
+    }
+
+    document.body.innerHTML += `
+    <br/><h1>Rule</h1>
+    <div>서버의 구성원들에게 적용될 규칙의 통칭입니다.</div>
+    <div>Role에 따라 정의될 규칙을 확인할 수 있습니다.</div>
+    `
+
+    let str = `<select id="sel_Rule" onchange="__Onchange()">`;
+    for(const key in gMemberType) {
+        str += `<option value="${key}" ${key == RuleArg0 ? "selected" : ""}>${key}</option>`;
+    }
+
+    document.body.innerHTML += str + `</select><hr/>`;
+
+    for(const tempRule of gRule) {
+        document.body.innerHTML += `${tempRule.Dump(RuleArg0)}<br/>`;
+    }
+}
+
+
+const gMemberType = {
+        먼지: new cMemberType("먼지", 
+`먼지다. 
+현 서버의 관리자들이다.
+
+A dust.
+The managers of this server.
+`),
+        "당신은 이제부터 제 먼지입니다": new cMemberType("당신은 이제부터 제 먼지입니다", 
+`일반 유저이다.
+
+is the common user.
+`
+),
+    };
+
+let gRule = [
+    new cRule(
+`서버 내에서 분란을 조성하는 채팅과 발언을 금한다.
+Any mentions making the distribution in this server is prohibited.
+
+정치적 발언, 수위가 있는 발언, 타인을 모욕하는 발언, 특정인을 공격하는 발언, 지나친 자기비하, 종교 권유, 지나친 욕설 등과 같은 채팅 또는 발언이 해당된다.
+This includes chats or statements that contain political comments, suggestive comments, insults to others, attacks on specific individuals, excessive self-deprecation, religious advice, and excessive profanity.
+
+위와 같은 채팅 또는 발언이 보일 시 해당 채팅을 삭제하며, 음성방의 경우 마이크를 차단한다.  
+If you see chats or comments as the above, the chat will be deleted and, in the case of voice rooms, the microphone will be blocked.
+
+차단 횟수는 3일 동안 누적되며, 3일이 지날 경우 누적된 차단의 수는 초기화된다. 차단의 강도는 다음과 같다.  
+    - 1회: 1분  
+    - 2회: 5분  
+    - 3회: 10분  
+    - 4회: 30분  
+    - 5회: 1시간  
+    - 6회 이상: 하루 (24시)  
+
+6회 이상 누적 시 관리자의 판단하에 역할 제거(서버 사용 제한), 서버 추방, 차단이 이루어질 수 있다.`
+    ),
+
+    new cRule(
+`타 서버 또는 타인에게 서버 언급을 금한다.
+Mentioning the server to other servers or to others is prohibited.
+
+언급이 확인되었을 경우, 해당 유저를 차단 조치한다. 
+If we determine you have leaked information from this server to the outside, you will be blocked from this server immediately.`
+    ),
+
+    new cRule(
+`타인을 서버장(먼지)에게 말하지 않고 초대하는 것을 금한다.
+Enrolling a stranger on this server without a situation not being known by the owner of this server(Mungee) is prohibited.
+
+이를 어길 시, 기존 유저와 들어온 유저 모두 차단 조치한다.  
+If this is violated, both existing who violated and new users will be blocked.`
+    ),
+
+    new cRule("", {"당신은 이제부터 제 먼지입니다": 
+`서버 사용이 제한되었다는 것은 역할이 제거되었을 경우를 말합니다.
+역할이 제거된 사용자는 처벌 기록을 확인 후 신고 게시판을 이용할 수 있으며, 게시판을 통해 처벌에 대해 문의, 정정을 요청할 수 있습니다.  
+3일 내에 문의, 정정 요청이 없을 경우 혹은 관리자들의 판단하에 서버 추방, 차단이 될 수 있습니다.`
+    }),
+
+    new cRule("", {먼지:
+`타당한 근거 없이 유저를 처벌하는 것을 금한다.
+Punishing users without justifiable grounds is prohibited.
+`
+    }),
+
+    new cRule("", {먼지:
+`처벌 기록은 유저 전체에게 공개되도록 처벌 기록에 증거, 당시 상황 설명과 함께 남긴다.
+Punishment records are left in the punishment records along with evidence and an explanation of the situation at the time.`
+    })
+];
+
+gRule.push(
+    new cRule("", {먼지:
+`${gRule[4].Link("먼지")}, ${gRule[5].Link("먼지")}의 위반 사항이 확인될 경우, 해당 관리자는 한 달 동안 ${gMemberType["당신은 이제부터 제 먼지입니다"].Link()}로 일시 강등한다.
+If a violation of ${gRule[4].Link("먼지")}, ${gRule[5].Link("먼지")} is confirmed, the administrator in question will be temporarily demoted to a ${gMemberType["당신은 이제부터 제 먼지입니다"].Link()} for one month.`
+    }),
+);
+
+gRule.push(
+    new cRule("", {먼지:
+`기본적으로 관리자는 인원제한이 있는 방을 권한을 이용해 들어갈 수 없으나 신고가 들어온 방일 경우 허용한다.`
+    })
+)
+
+main(gMemberType, gRule);
+function __Onchange() {
+    main(gMemberType, gRule, document.getElementById("sel_Rule").value);
+}
+</script>
+</html>
